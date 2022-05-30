@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>Guess the Word</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<html>
+<body class="bg-secondary">
+    <div class="container">
+        <div class="page-header text-center text-light mt-3">
+        <h1 class="h1 mb-0">What's the Word??</h1>
+        <p class="h5"><span class="text-info">Quick! </span>Type a word while no one is looking to start a game!</p>
+        <form action="/wordGame" method="POST" class="input-group">
+            <input class="form-control" required type="text" placeholder="Enter a word" name="word" pattern="[a-zA-Z]+" title="enter only one word with no special characters">
+            <button class="btn btn-info btn-lg">Submit</button>
+        </form>
+        </div>
+        
+        <div class="row text-center px-2">
+            <% for(let i = 0; i < wordGame.length; i++) {%>
+
+            <% const guessArray = JSON.stringify(wordGame[i].guess).toUpperCase().split('"').slice(1,-1).join('').split(',')
+            const wordArray = wordGame[i].word.split('')
+            let correct = 0
+            const wrongGuess = guessArray.filter(guess => !wordGame[i].word.toLowerCase().includes(guess.toLowerCase()))%>
+
+            <% function classOfShow(charIndex) {
+                for (let k = 0; k < guessArray.length; k++){
+                    if (wordGame[i].word[charIndex].toLowerCase() === guessArray[k].toLowerCase()){
+                        correct++
+                        return 'show'
+                    }
+                }
+            } %>
+
+            <div class="col-md-6">
+                <div class="card bg-light text-dark my-3 p-3 d-flex flex-column " >
+                    <span class="h4 align-self-center">There are <%= wordGame[i].word.length %> letters in this word.</span>
+                    <div class="container">
+                        <ul id="<%= wordGame[i]._id%>" class="list-group list-group-horizontal-lg py-1">
+                            <% for(let j = 0; j < wordGame[i].word.length; j++) {%>
+                            <li class="<%=classOfShow(j)%> list-group-item flex-fill bg-success text-light"><%= wordGame[i].word[j] %></li>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <p class="py-2 align-self-center">You have 8 chances to get all the letters!</p>
+                    <% if (correct !== wordGame[i].word.length && wrongGuess.length < 8){%>
+                        <form action="/guessLetter" method="POST" class="guess input-group align-self-center">
+                            <input type="text" required placeholder="Guess a Letter" name="guess" pattern="[a-zA-Z]{1}" title="enter a only a single alphabet character">
+                            <input type="hidden" name="game" value="<%= wordGame[i]._id%>">
+                            <button class="btn btn-dark text-light">Take a Guess</button>
+                        </form>
+                    <% } %>
+                    <p class="mt-3 align-self-center">Incorrect Guesses: <%= wrongGuess.join(' ')%></p>
+
+                    <% if (correct === wordGame[i].word.length){%>
+                        <span class="card bg-success mb-2 p-1 align-self-center">Congratulations! You Win</span>
+                        <% } %>
+                    <% if (wrongGuess.length >= 8){%>
+                    <span class="card bg-danger mb-2 p-1 align-self-center">You Lose</span>
+                    <span class="align-self-center">The correct word is <span class="text-success ">"<%=wordGame[i].word%>"</span></span>
+                    <% } %>
+
+                    <button id="deleteBtn" class="btn btn-dark text-light mt-2 align-self-center">Delete Game</button>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>

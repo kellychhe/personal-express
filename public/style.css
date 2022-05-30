@@ -1,0 +1,49 @@
+/******************************************
+/* CSS
+/*******************************************/
+
+/* Box Model Hack */
+/* *{
+  box-sizing: border-box;
+} */
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+/* body{
+  display: flex;
+  flex-direction: column;
+  margin: 0 5%;
+}
+span{
+  display: block;
+}
+section{
+  border: 1px solid black;
+  margin: 2vw 2vh;
+} */
+
+/* h1, button, input, p, ul, div{
+  font-family: 'Shadows Into Light Two', 'Helvetica', sans-serif;
+  align-self: center;
+} */
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
+ /* ul{
+  display: flex;
+  list-style-type: none;
+  justify-content: center;
+} */
+.show{
+  visibility: visible;
+}
+li{
+  visibility: hidden;
+}
+.guess{
+  width: max-content;
+}
+/* .hidden{
+  visibility: hidden;
+} */

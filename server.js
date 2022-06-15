@@ -4,7 +4,7 @@ const bodyParser = require('body-parser') //access body parser module
 const MongoClient = require('mongodb').MongoClient //access mongodb
 const {ObjectId} = require('mongodb') //gives access to _id in mongodb
 const mongoose = require('mongoose')
-
+const port     = process.env.PORT || 3000;
 let db 
 require('dotenv').config()
 const dbName = "game"; //name of database
@@ -12,7 +12,7 @@ const url = 'mongodb+srv://kellychhe:Poop00@cluster0.2unid.mongodb.net/?retryWri
 // console.log(url)
 // mongoose.set('useNewUrlParser', true);
 // mongoose.set('useUnifiedTopology', true);
-app.listen(3000, () => { // listening on port 3000
+app.listen(port, () => { // listening on port 3000
 
     mongoose.connect(url, (error, client) => {
         if(error) {

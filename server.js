@@ -5,8 +5,7 @@ const MongoClient = require('mongodb').MongoClient //access mongodb
 const {ObjectId} = require('mongodb') //gives access to _id in mongodb
 
 let db 
-
-const url = 'mongodb+srv://kellychhe:Poop00@cluster0.2unid.mongodb.net/?retryWrites=true&w=majority'
+require('dotenv').config()
 const dbName = "game"; //name of database
 
 app.listen(3000, () => { // listening on port 3000

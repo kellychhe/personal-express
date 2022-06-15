@@ -7,7 +7,8 @@ const {ObjectId} = require('mongodb') //gives access to _id in mongodb
 let db 
 require('dotenv').config()
 const dbName = "game"; //name of database
-const url = process.env.MONGODB_URL || ''
+const url = 'mongodb+srv://kellychhe:Poop00@cluster0.2unid.mongodb.net/?retryWrites=true&w=majority'
+console.log(url)
 app.listen(3000, () => { // listening on port 3000
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
         if(error) {

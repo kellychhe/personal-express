@@ -3,18 +3,22 @@ const app = express() // app is telling express function to run
 const bodyParser = require('body-parser') //access body parser module
 const MongoClient = require('mongodb').MongoClient //access mongodb
 const {ObjectId} = require('mongodb') //gives access to _id in mongodb
+const mongoose = require('mongoose')
 
 let db 
 require('dotenv').config()
 const dbName = "game"; //name of database
 const url = 'mongodb+srv://kellychhe:Poop00@cluster0.2unid.mongodb.net/?retryWrites=true&w=majority'
-console.log(url)
+// console.log(url)
+// mongoose.set('useNewUrlParser', true);
+// mongoose.set('useUnifiedTopology', true);
 app.listen(3000, () => { // listening on port 3000
-    MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
+
+    mongoose.connect(url, (error, client) => {
         if(error) {
             throw error;
         }
-        db = client.db(dbName);
+        db = client;
         console.log("Connected to `" + dbName + "`!");
     });
 });
